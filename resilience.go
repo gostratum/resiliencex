@@ -29,7 +29,7 @@ type Executor interface {
 	Execute(ctx context.Context, fn func(context.Context) error) error
 
 	// ExecuteWithResult runs the function and returns a result
-	ExecuteWithResult(ctx context.Context, fn func(context.Context) (interface{}, error)) (interface{}, error)
+	ExecuteWithResult(ctx context.Context, fn func(context.Context) (any, error)) (any, error)
 
 	// Name returns the executor name
 	Name() string

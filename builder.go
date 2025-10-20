@@ -98,13 +98,13 @@ func (e *executor) Name() string {
 }
 
 func (e *executor) Execute(ctx context.Context, fn func(context.Context) error) error {
-	_, err := e.ExecuteWithResult(ctx, func(ctx context.Context) (interface{}, error) {
+	_, err := e.ExecuteWithResult(ctx, func(ctx context.Context) (any, error) {
 		return nil, fn(ctx)
 	})
 	return err
 }
 
-func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Context) (interface{}, error)) (interface{}, error) {
+func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Context) (any, error)) (any, error) {
 	// Wrap the function with all patterns in order:
 	// 1. Rate Limiter (outermost - control admission)
 	// 2. Bulkhead (limit concurrency)
@@ -112,15 +112,15 @@ func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Contex
 	// 4. Circuit Breaker (protect downstream)
 	// 5. Retry (innermost - retry failures)
 
-	wrappedFn := func(ctx context.Context) (interface{}, error) {
+	wrappedFn := func(ctx context.Context) (any, error) {
 		return fn(ctx)
 	}
 
 	// Apply retry (innermost)
 	if e.hasRetry {
 		originalFn := wrappedFn
-		wrappedFn = func(ctx context.Context) (interface{}, error) {
-			var result interface{}
+		wrappedFn = func(ctx context.Context) (any, error) {
+			var result any
 			err := e.retry.Execute(ctx, func(ctx context.Context) error {
 				var execErr error
 				result, execErr = originalFn(ctx)
@@ -133,8 +133,8 @@ func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Contex
 	// Apply circuit breaker
 	if e.hasCircuitBreaker {
 		originalFn := wrappedFn
-		wrappedFn = func(ctx context.Context) (interface{}, error) {
-			var result interface{}
+		wrappedFn = func(ctx context.Context) (any, error) {
+			var result any
 			err := e.circuitBreaker.Execute(ctx, func(ctx context.Context) error {
 				var execErr error
 				result, execErr = originalFn(ctx)
@@ -147,8 +147,8 @@ func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Contex
 	// Apply timeout
 	if e.hasTimeout {
 		originalFn := wrappedFn
-		wrappedFn = func(ctx context.Context) (interface{}, error) {
-			var result interface{}
+		wrappedFn = func(ctx context.Context) (any, error) {
+			var result any
 			err := e.timeout.Execute(ctx, func(ctx context.Context) error {
 				var execErr error
 				result, execErr = originalFn(ctx)
@@ -161,8 +161,8 @@ func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Contex
 	// Apply bulkhead
 	if e.hasBulkhead {
 		originalFn := wrappedFn
-		wrappedFn = func(ctx context.Context) (interface{}, error) {
-			var result interface{}
+		wrappedFn = func(ctx context.Context) (any, error) {
+			var result any
 			err := e.bulkhead.Execute(ctx, func(ctx context.Context) error {
 				var execErr error
 				result, execErr = originalFn(ctx)

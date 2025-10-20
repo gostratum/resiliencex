@@ -130,7 +130,7 @@ executor := resilience.NewBuilder().
     Build()
 
 // Execute with all patterns applied
-result, err := executor.ExecuteWithResult(ctx, func(ctx context.Context) (interface{}, error) {
+result, err := executor.ExecuteWithResult(ctx, func(ctx context.Context) (any, error) {
     return fetchPaymentData(ctx)
 })
 ```
