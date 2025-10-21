@@ -202,7 +202,8 @@ func NewConfig(loader configx.Loader) (Config, error) {
 		return cfg, err
 	}
 
-	return cfg, nil
+	s := cfg.Sanitize()
+	return *s, nil
 }
 
 // Sanitize returns a copy of the resilience Config. There are typically no
