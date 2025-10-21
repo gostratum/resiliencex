@@ -204,3 +204,26 @@ func NewConfig(loader configx.Loader) (Config, error) {
 
 	return cfg, nil
 }
+
+// Sanitize returns a copy of the resilience Config. There are typically no
+// secrets here, but we provide the method for consistency across modules.
+func (c *Config) Sanitize() *Config {
+	out := *c
+	// Shallow copy of nested structs is sufficient as they do not hold secrets
+	out.CircuitBreaker = c.CircuitBreaker
+	out.Retry = c.Retry
+	out.RateLimiter = c.RateLimiter
+	out.Bulkhead = c.Bulkhead
+	out.Timeout = c.Timeout
+	return &out
+}
+
+// ConfigSummary returns a compact diagnostic map safe for logging.
+func (c *Config) ConfigSummary() map[string]any {
+	return map[string]any{
+		"circuit_breaker_enabled": c.CircuitBreaker.Enabled,
+		"retry_enabled":           c.Retry.Enabled,
+		"rate_limiter_enabled":    c.RateLimiter.Enabled,
+		"bulkhead_enabled":        c.Bulkhead.Enabled,
+	}
+}
