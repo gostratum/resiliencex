@@ -1,9 +1,9 @@
 package resilience
 
 import (
-"testing"
+	"testing"
 
-"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCircuitStateString(t *testing.T) {
@@ -16,10 +16,10 @@ func TestCircuitStateString(t *testing.T) {
 		{StateHalfOpen, "half-open"},
 		{CircuitState(99), "unknown"},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.expected, func(t *testing.T) {
-assert.Equal(t, tt.expected, tt.state.String())
+			assert.Equal(t, tt.expected, tt.state.String())
 		})
 	}
 }
@@ -31,7 +31,7 @@ func TestBulkheadAvailable(t *testing.T) {
 		MaxQueueSize:  2,
 	}
 	bulkhead := NewBulkhead(config)
-	
+
 	// Initially should have all slots available
 	available := bulkhead.Available()
 	assert.Equal(t, 5, available)
