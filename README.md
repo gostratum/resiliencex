@@ -377,6 +377,10 @@ The module follows gostratum patterns:
 - ✅ **Composable**: Builder pattern for combining patterns
 - ✅ **Context-aware**: Full context.Context support
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a complete list of changes.
+
 ## License
 
 MIT License - See LICENSE file for details
