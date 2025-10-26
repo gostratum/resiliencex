@@ -51,3 +51,30 @@ func (t *timeout) Execute(ctx context.Context, fn func(context.Context) error) e
 		return timeoutCtx.Err()
 	}
 }
+
+func (t *timeout) ExecuteWithResult(ctx context.Context, fn func(context.Context) (any, error)) (any, error) {
+	// Create timeout context
+	timeoutCtx, cancel := context.WithTimeout(ctx, t.duration)
+	defer cancel()
+
+	// Execute with timeout
+	type result struct {
+		value any
+		err   error
+	}
+	resultChan := make(chan result, 1)
+	go func() {
+		value, err := fn(timeoutCtx)
+		resultChan <- result{value: value, err: err}
+	}()
+
+	select {
+	case res := <-resultChan:
+		return res.value, res.err
+	case <-timeoutCtx.Done():
+		if timeoutCtx.Err() == context.DeadlineExceeded {
+			return nil, ErrTimeout
+		}
+		return nil, timeoutCtx.Err()
+	}
+}

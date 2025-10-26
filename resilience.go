@@ -116,6 +116,9 @@ type Timeout interface {
 	// Execute runs the function with a timeout
 	Execute(ctx context.Context, fn func(context.Context) error) error
 
+	// ExecuteWithResult runs the function with a timeout and returns result
+	ExecuteWithResult(ctx context.Context, fn func(context.Context) (any, error)) (any, error)
+
 	// Name returns the timeout name
 	Name() string
 }

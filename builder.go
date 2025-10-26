@@ -148,11 +148,8 @@ func (e *executor) ExecuteWithResult(ctx context.Context, fn func(context.Contex
 	if e.hasTimeout {
 		originalFn := wrappedFn
 		wrappedFn = func(ctx context.Context) (any, error) {
-			var result any
-			err := e.timeout.Execute(ctx, func(ctx context.Context) error {
-				var execErr error
-				result, execErr = originalFn(ctx)
-				return execErr
+			result, err := e.timeout.ExecuteWithResult(ctx, func(ctx context.Context) (any, error) {
+				return originalFn(ctx)
 			})
 			return result, err
 		}
