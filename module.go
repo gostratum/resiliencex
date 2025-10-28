@@ -1,8 +1,6 @@
 package resilience
 
 import (
-	"context"
-
 	"github.com/gostratum/core/configx"
 	"github.com/gostratum/core/logx"
 	"go.uber.org/fx"
@@ -97,18 +95,4 @@ func NewProvider(params Params) (Result, error) {
 	return Result{
 		Builder: builder,
 	}, nil
-}
-
-// LifecycleHooks adds lifecycle hooks for the resilience module
-func LifecycleHooks(lc fx.Lifecycle, logger logx.Logger) {
-	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
-			logger.Info("Resilience module started")
-			return nil
-		},
-		OnStop: func(ctx context.Context) error {
-			logger.Info("Resilience module stopped")
-			return nil
-		},
-	})
 }
