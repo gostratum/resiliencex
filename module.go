@@ -9,12 +9,14 @@ import (
 )
 
 // Module provides the resilience module for fx
-var Module = fx.Module("resilience",
-	fx.Provide(
-		NewConfig,
-		NewProvider,
-	),
-)
+func Module() fx.Option {
+	return fx.Module("resiliencex",
+		fx.Provide(
+			NewConfig,
+			NewProvider,
+		),
+	)
+}
 
 // Params contains dependencies for the resilience provider
 type Params struct {
