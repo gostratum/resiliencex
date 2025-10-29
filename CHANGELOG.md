@@ -7,13 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.5] - 2025-10-26
+
+## [0.2.0] - 2025-10-29
+
+### Added
+- Release version 0.2.0
+
+### Changed
+- Updated gostratum dependencies to latest versions
+
+
+## [0.1.5] - 2025-10-28
 
 ### Added
 
 - Enhance Makefile and scripts for version management and dependency updates
 
-## [0.1.4] - 2025-10-26
+## [0.1.4] - 2025-10-27
 
 ### Changed
 
@@ -38,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Change return type from interface{} to any in executor methods
 
-## [0.1.2] - 2025-10-26
+## [0.1.2] - 2025-10-25
 
 ### Changed
 
@@ -52,13 +62,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add unit tests for bulkhead and resilience configurations
 
-## [0.1.1] - 2025-10-26
+## [0.1.1] - 2025-10-24
 
 ### Added
 
 - Add unit tests for circuit breaker, rate limiter, and retry mechanisms
 
-## [0.1.0] - 2025-10-26
+## [0.1.0] - 2025-10-23
 
 ### Added
 
