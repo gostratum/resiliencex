@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestResilienceSanitizeAndSummary(t *testing.T) {
+func TestConfigSummary(t *testing.T) {
 	cfg := DefaultCircuitBreakerConfig()
 	c := Config{
 		CircuitBreaker: cfg,
@@ -15,11 +15,6 @@ func TestResilienceSanitizeAndSummary(t *testing.T) {
 		RateLimiter:    DefaultRateLimiterConfig(),
 		Bulkhead:       DefaultBulkheadConfig(),
 		Timeout:        DefaultTimeoutConfig(),
-	}
-
-	s := c.Sanitize()
-	if s == &c {
-		t.Fatalf("Sanitize must return a copy")
 	}
 
 	sum := c.ConfigSummary()

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Config.Sanitize()** method removed - resilience config contains no secrets
+  - This was implementing the method unnecessarily for "consistency"
+  - Module now only implements `Prefix()` and `ConfigSummary()`
+  - No breaking change for users who weren't calling `Sanitize()` directly
 
 ## [0.2.0] - 2025-10-29
 
