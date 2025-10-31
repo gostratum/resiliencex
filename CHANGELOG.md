@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [0.2.1] - 2025-10-31
+
+### Added
+- Release version 0.2.1
+
+### Changed
+- Updated gostratum dependencies to latest versions
+
+
 ### Removed
 - **Config.Sanitize()** method removed - resilience config contains no secrets
   - This was implementing the method unnecessarily for "consistency"
