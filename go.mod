@@ -3,7 +3,7 @@ module github.com/gostratum/resiliencex
 go 1.25.1
 
 require (
-	github.com/gostratum/core v0.2.0
+	github.com/gostratum/core v0.2.2
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/fx v1.24.0
 )
